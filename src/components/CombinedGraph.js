@@ -5,15 +5,13 @@ import axios from 'axios';
 
 export default function Graph(props) {
     let prices = []
-
+    let Authorization = `bamba ${localStorage.getItem("token")}`
 
     const [price, setPrice] = useState(null)
     const [date, setDate] = useState(null)
     useEffect(() => {
 
         loadCoins(props.coins)
-
-
 
     }, [])
 
@@ -23,8 +21,7 @@ export default function Graph(props) {
                 interval: "h1",
                 start: Date.now()-1000*60*60*24,
                 end: Date.now()
-            }).then(data => {
-                let dates = []
+            }, {headers: {Authorization}}).then(data => {
                 const priceLocal = []
                 const dateLocal = []
                 data.data.data.forEach(val => {
